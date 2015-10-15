@@ -64,19 +64,19 @@ feature "Once logged in on the website" do
     expect(page).not_to have_content('Edit KFC')
   end
 
-  # it "can only delete restaurants which they've created" do
-  #   sign_up_first_user
-  #   click_link('Add a restaurant')
-  #   fill_in 'Name', with: 'KFC'
-  #   click_button 'Create Restaurant'
-  #   expect(page).to have_content 'KFC'
-  #   expect(current_path).to eq '/restaurants'
-  #   click_link('Sign out')
-  #   expect(current_path).to eq '/'
-  #   sign_up_second_user
-  #   click_link 'Delete KFC'
-  #   expect(current_path).to eq '/'
-  #   expect(page).to have_content 'You are not allowed to delete this restaurant'
-  # end
+  it "can only delete restaurants which they've created" do
+    click_link('Add a restaurant')
+    fill_in 'Name', with: 'KFC'
+    click_button 'Create Restaurant'
+    # expect(page).to have_content 'KFC'
+    # expect(current_path).to eq '/restaurants'
+    click_link('Sign out')
+    # expect(current_path).to eq '/'
+    second_user = build :second_user
+    sign_up(second_user)
+    # click_link 'Edit KCF'
+    # expect(current_path).to eq '/'
+    expect(page).not_to have_content('Delete KFC')
+  end
 
 end
