@@ -12,6 +12,8 @@ feature 'restaurants' do
 
   context 'restaurants have been added' do
     before do
+      # user = build :user
+      # sign_up(user)
       Restaurant.create(name: 'KFC')
     end
 
@@ -61,13 +63,14 @@ feature 'restaurants' do
 
   context 'editing restaurants' do
     before do
-      Restaurant.create name: 'KFC'
-      user = build :user
-      sign_up(user)
+      current_user = create :user
+      sign_in(current_user)
+      newrestaurant = current_user.restaurants.create name: 'KFC'
     end
 
     scenario 'let a user edit a restaurant' do
      visit '/restaurants'
+
      click_link 'Edit KFC'
      fill_in 'Name', with: 'Kentucky Fried Chicken'
      click_button 'Update Restaurant'
@@ -78,9 +81,10 @@ feature 'restaurants' do
 
   context 'deleting restaurants' do
     before do
-      user = build :user
-      sign_up(user)
-      Restaurant.create name: 'KFC'
+      current_user = build :user
+      sign_up(current_user)
+      current_user = User.find_by(email: current_user.email)
+      current_user.restaurants.create name: 'KFC'
     end
 
     scenario 'removes a restaurant when a user clicks a delete link' do
