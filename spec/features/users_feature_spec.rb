@@ -41,11 +41,42 @@ feature "User can sign in and out" do
       expect(page).not_to have_link('Sign up')
     end
   end
+end
 
-  context "can only edit restaurants which they've created" do
-
-
-
+feature "Once logged in on the website" do
+  before do
+    first_user = build :first_user
+    sign_up(first_user)
   end
+
+  it "can only edit restaurants which they've created" do
+    click_link('Add a restaurant')
+    fill_in 'Name', with: 'KFC'
+    click_button 'Create Restaurant'
+    # expect(page).to have_content 'KFC'
+    # expect(current_path).to eq '/restaurants'
+    click_link('Sign out')
+    # expect(current_path).to eq '/'
+    second_user = build :second_user
+    sign_up(second_user)
+    # click_link 'Edit KCF'
+    # expect(current_path).to eq '/'
+    expect(page).not_to have_content('Edit KFC')
+  end
+
+  # it "can only delete restaurants which they've created" do
+  #   sign_up_first_user
+  #   click_link('Add a restaurant')
+  #   fill_in 'Name', with: 'KFC'
+  #   click_button 'Create Restaurant'
+  #   expect(page).to have_content 'KFC'
+  #   expect(current_path).to eq '/restaurants'
+  #   click_link('Sign out')
+  #   expect(current_path).to eq '/'
+  #   sign_up_second_user
+  #   click_link 'Delete KFC'
+  #   expect(current_path).to eq '/'
+  #   expect(page).to have_content 'You are not allowed to delete this restaurant'
+  # end
 
 end
