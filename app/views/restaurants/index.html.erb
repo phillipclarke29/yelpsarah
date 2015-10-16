@@ -13,16 +13,22 @@
     <% if restaurant.reviews.any? %>
       <ul>
         <% restaurant.reviews.each do |review| %>
+
           <li>
 
             <%= review.thoughts %>, <strong><%= review.rating %></strong>/5
+            <% if current_user %>
+            <% if review.user_id == current_user.id %>
+              <%= link_to "Delete Review", "/restaurants/#{restaurant.id}/reviews/#{review.id}", method: :delete %>
+            <% end %>
+            <% end %>
           </li>
         <% end %>
       </ul>
     <% else %>
       <p>No reviews.</p>
+        <% unless restaurant.reviews.any?{|review| review.user_id == current_user.id} %>
     <% end %>
-    <% unless restaurant.reviews.any?{|review| review.user_id == current_user.id} %>
 
     <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %>
     <% end %>

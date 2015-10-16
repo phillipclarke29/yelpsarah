@@ -22,4 +22,11 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(:thoughts, :rating, :user_id)
   end
 
+  def destroy
+    puts params
+    @review = Review.find(params[:id])
+    @review.destroy
+      redirect_to restaurants_path
+  end
+
 end
