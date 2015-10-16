@@ -53,14 +53,9 @@ feature "Once logged in on the website" do
     click_link('Add a restaurant')
     fill_in 'Name', with: 'KFC'
     click_button 'Create Restaurant'
-    # expect(page).to have_content 'KFC'
-    # expect(current_path).to eq '/restaurants'
     click_link('Sign out')
-    # expect(current_path).to eq '/'
     second_user = build :second_user
     sign_up(second_user)
-    # click_link 'Edit KCF'
-    # expect(current_path).to eq '/'
     expect(page).not_to have_content('Edit KFC')
   end
 
@@ -68,15 +63,21 @@ feature "Once logged in on the website" do
     click_link('Add a restaurant')
     fill_in 'Name', with: 'KFC'
     click_button 'Create Restaurant'
-    # expect(page).to have_content 'KFC'
-    # expect(current_path).to eq '/restaurants'
     click_link('Sign out')
-    # expect(current_path).to eq '/'
     second_user = build :second_user
     sign_up(second_user)
-    # click_link 'Edit KCF'
-    # expect(current_path).to eq '/'
     expect(page).not_to have_content('Delete KFC')
+  end
+
+  it "can only add a single review to a website" do
+    click_link('Add a restaurant')
+    fill_in 'Name', with: 'KFC'
+    click_button 'Create Restaurant'
+    click_link "Review KFC"
+    fill_in 'Thoughts', with: 'Great'
+    click_button 'Leave Review'
+    expect(page).not_to have_content("Review KFC")
+
   end
 
 end

@@ -1,7 +1,6 @@
 <% if Restaurant.all.any? %>
   <% Restaurant.all.each do |restaurant| %>
     <%= link_to restaurant.name, restaurant_path(restaurant) %>
-    <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %>
     <% if current_user %>
     <%  if restaurant.user_id == current_user.id %>
     <%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %>
@@ -15,6 +14,7 @@
       <ul>
         <% restaurant.reviews.each do |review| %>
           <li>
+
             <%= review.thoughts %>, <strong><%= review.rating %></strong>/5
           </li>
         <% end %>
@@ -22,7 +22,10 @@
     <% else %>
       <p>No reviews.</p>
     <% end %>
+    <% unless restaurant.reviews.any?{|review| review.user_id == current_user.id} %>
 
+    <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %>
+    <% end %>
   <% end %>
 <% else %>
   <h1>No restaurants yet</h1>

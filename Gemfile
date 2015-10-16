@@ -1,11 +1,5 @@
 source 'https://rubygems.org'
 
-group :test do
-  gem 'capybara'
-  gem 'factory_girl_rails'
-  gem 'rspec-rails'
-  gem 'shoulda'
-end
 
 
 
@@ -34,6 +28,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'launchy'
+gem 'shoulda'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -48,6 +43,9 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-collection_matchers'
+  gem 'capybara'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 
 end
 
